@@ -1,16 +1,19 @@
 {
-  "name": "My Time PRO v2",
-  "short_name": "My Time PRO",
+  "name": "MyTime PRO Wワーク対応",
+  "short_name": "MyTime PRO",
+  "description": "個人用の勤怠・配送設置・日報管理アプリ",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#07101f",
-  "theme_color": "#0a1020",
+  "theme_color": "#10182d",
   "lang": "ja",
   "icons": [
     {
-      "src": "icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml"
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

@@ -1,120 +1,281 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a1020">
-<title>My Time PRO v2</title>
-<link rel="manifest" href="manifest.json">
-<style>
-:root{
- --bg:#07101f;--bg2:#0b1325;--panel:rgba(16,25,45,.96);--panel2:rgba(255,255,255,.055);
- --line:rgba(255,255,255,.09);--text:#f6f8ff;--muted:#9aa7c1;--p1:#6d7cff;--p2:#9b6dff;
- --green:#35d48e;--red:#ff6475;--yellow:#ffc857;--blue:#49b8ff;--shadow:0 18px 55px rgba(0,0,0,.32)
-}
-[data-theme="light"]{
- --bg:#eef2f8;--bg2:#f9fbff;--panel:rgba(255,255,255,.96);--panel2:rgba(20,30,60,.045);
- --line:rgba(20,30,60,.12);--text:#111827;--muted:#667085;--shadow:0 16px 44px rgba(40,55,90,.13)
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:radial-gradient(circle at 12% 5%,rgba(109,124,255,.24),transparent 28%),radial-gradient(circle at 88% 10%,rgba(73,184,255,.12),transparent 25%),linear-gradient(150deg,var(--bg),var(--bg2) 60%,var(--bg))}
-button,input,textarea,select{font:inherit}.app{width:min(1180px,100%);margin:auto;padding:14px 14px 100px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 2px 16px}.brand h1{margin:0;font-size:24px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}.right-top{display:flex;gap:8px;align-items:center}.pill{font-size:11px;padding:8px 10px;border-radius:999px;background:rgba(53,212,142,.1);border:1px solid rgba(53,212,142,.3);color:var(--text)}
-.tabs{position:sticky;top:0;z-index:8;display:flex;gap:8px;overflow:auto;padding:8px 0 12px;background:linear-gradient(var(--bg) 68%,transparent)}.tab{white-space:nowrap;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:13px;cursor:pointer}.tab.active{background:linear-gradient(135deg,var(--p1),var(--p2));border-color:transparent;color:white}
-.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:23px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}.pad{padding:21px}.date{color:var(--muted);font-size:13px}.clock{font-size:clamp(50px,8vw,78px);font-weight:800;letter-spacing:-.055em;margin:9px 0}.status{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:var(--panel2);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--muted)}.dot.work{background:var(--green)}.dot.break{background:var(--yellow)}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.btn{border:0;border-radius:16px;padding:15px;color:#fff;font-weight:750;cursor:pointer}.btn:disabled{opacity:.35}.primary{background:linear-gradient(135deg,var(--p1),var(--p2))}.danger{background:linear-gradient(135deg,#ff5270,#ff7e61)}.secondary{background:var(--panel2);color:var(--text)}.success{background:linear-gradient(135deg,#1fad72,#3bd79a)}.full{grid-column:1/-1}.live{display:flex;justify-content:space-between;margin-top:14px;padding:14px;border-radius:16px;background:var(--panel2);color:var(--muted)}.live strong{color:var(--text)}
-h2{font-size:17px;margin:0 0 14px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel2)}.stat span{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.stat strong{font-size:20px}.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}.mini{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer}.section{margin-top:14px}.head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.muted{color:var(--muted);font-size:12px}.job-list{display:grid;gap:11px}.job{padding:14px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025)}.job-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.job-head strong{font-size:14px}.remove{border:0;background:transparent;color:#ff9baa;cursor:pointer}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:11px;outline:none}.field textarea{min-height:80px;resize:vertical}.counter{display:flex;align-items:center;gap:8px}.counter button{width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--text)}.counter input{text-align:center}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.output{width:100%;min-height:270px;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:15px;padding:14px;line-height:1.75;resize:vertical}
-table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--muted)}.table-wrap{overflow:auto}.empty{text-align:center;color:var(--muted);padding:30px}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.setting{padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--panel2)}.setting label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}.setting input,.setting select{width:100%;padding:11px;border-radius:11px;border:1px solid var(--line);background:var(--panel2);color:var(--text)}.canvas-wrap{padding:12px;background:var(--panel2);border-radius:16px}canvas{width:100%;height:260px}.notice{padding:12px;border-radius:14px;background:rgba(73,184,255,.09);border:1px solid rgba(73,184,255,.22);color:var(--text);font-size:12px;line-height:1.6}.bottom{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);z-index:10;display:flex;gap:8px;padding:8px;border-radius:18px;background:rgba(10,16,32,.92);border:1px solid var(--line);backdrop-filter:blur(18px)}.bottom button{border:0;border-radius:12px;padding:10px 13px;background:rgba(255,255,255,.07);color:white}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.show{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px}.audit{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);margin-bottom:9px}.audit strong{display:block;margin-bottom:5px}.lock{position:fixed;inset:0;background:linear-gradient(150deg,var(--bg),var(--bg2));z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.lock.show{display:flex}.lock-card{width:min(380px,100%);text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:24px}.lock-card input{width:100%;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);color:var(--text);text-align:center;font-size:20px;letter-spacing:.2em}
-.toast{position:fixed;left:50%;bottom:76px;transform:translate(-50%,15px);opacity:0;background:white;color:#111827;padding:11px 15px;border-radius:13px;font-size:13px;font-weight:700;transition:.22s;z-index:60}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:780px){.grid{grid-template-columns:1fr}.fields,.settings-grid{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}.full{grid-column:auto}.bottom{width:calc(100% - 20px);justify-content:space-around}.bottom button{flex:1;padding:10px 4px;font-size:12px}}
-@media(max-width:470px){.fields,.settings-grid{grid-template-columns:1fr}.quick{grid-template-columns:1fr 1fr}}
-@media print{body{background:white;color:black}.topbar,.tabs,.bottom,.toolbar,.btn,.mini,.notice{display:none!important}.page{display:none!important}#reportPage{display:block!important}.card{box-shadow:none;border:0;background:white}.output{border:0;color:black;background:white;min-height:auto}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10182d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>MyTime PRO</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-<div id="lockScreen" class="lock"><div class="lock-card"><h2>My Time PRO</h2><p class="muted">パスコードを入力してください</p><input id="unlockPin" type="password" inputmode="numeric" maxlength="8"><button id="unlockBtn" class="btn primary" style="width:100%;margin-top:12px">ロック解除</button></div></div>
+  <div id="lockScreen" class="lock-screen hidden">
+    <section class="lock-card">
+      <img src="./icon.svg" class="lock-icon" alt="">
+      <h1>MyTime PRO</h1>
+      <p>パスコードを入力してください</p>
+      <input id="unlockPin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="••••">
+      <button id="unlockButton" class="button primary">ロック解除</button>
+      <p id="unlockError" class="error-text"></p>
+    </section>
+  </div>
 
-<div class="app">
-<div class="topbar"><div class="brand"><h1>My Time PRO v2</h1><p>勤怠修正・配送設置・日報・月報・シフト</p></div><div class="right-top"><button id="themeBtn" class="pill">☀︎ / ☾</button><div id="syncBadge" class="pill">時刻確認中</div></div></div>
-<div class="tabs"><button class="tab active" data-page="homePage">打刻</button><button class="tab" data-page="jobsPage">業務</button><button class="tab" data-page="reportPage">日報</button><button class="tab" data-page="historyPage">履歴</button><button class="tab" data-page="shiftPage">シフト</button><button class="tab" data-page="monthPage">月報</button><button class="tab" data-page="settingsPage">設定</button></div>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">PERSONAL WORK MANAGER</p>
+        <h1>MyTime PRO</h1>
+        <p class="subtitle">勤怠・配送設置・日報をひとつに</p>
+      </div>
+      <div class="header-actions">
+        <select id="workplaceSwitcher" class="workplace-switcher" aria-label="勤務先切替"></select>
+        <button id="themeButton" class="icon-button" aria-label="テーマ切替">◐</button>
+        <span id="timeBadge" class="sync-badge">端末時刻</span>
+      </div>
+    </header>
 
-<section id="homePage" class="page active">
-<div class="grid">
-<div class="card pad"><div id="today" class="date"></div><div id="clock" class="clock">00:00:00</div><div class="status"><span id="dot" class="dot"></span><span id="status">未出勤</span></div><div class="actions"><button id="inBtn" class="btn primary">出勤する</button><button id="outBtn" class="btn danger" disabled>退勤する</button><button id="breakBtn" class="btn secondary full" disabled>休憩を開始</button></div><div class="live"><span>本日の実働時間</span><strong id="workToday">0時間00分</strong></div></div>
-<div class="card pad"><h2>本日の状況</h2><div class="stats"><div class="stat"><span>出社</span><strong id="startText">未記録</strong></div><div class="stat"><span>退社</span><strong id="endText">未記録</strong></div><div class="stat"><span>配送設置件数</span><strong id="jobCount">0件</strong></div><div class="stat"><span>残業見込</span><strong id="overtimeToday">0分</strong></div></div><div class="quick"><button class="mini" data-page-go="jobsPage">業務入力</button><button class="mini" id="gpsBtn">GPS取得</button><button class="mini" data-page-go="reportPage">日報確認</button><button class="mini" id="shareQuick">共有</button></div></div>
-</div></section>
+    <nav class="top-tabs" aria-label="メインメニュー">
+      <button class="tab active" data-page="home">打刻</button>
+      <button class="tab" data-page="jobs">業務入力</button>
+      <button class="tab" data-page="report">日報</button>
+      <button class="tab" data-page="history">履歴・修正</button>
+      <button class="tab" data-page="shifts">シフト</button>
+      <button class="tab" data-page="analytics">月報</button>
+      <button class="tab" data-page="settings">設定</button>
+    </nav>
 
-<section id="jobsPage" class="page"><div class="card pad"><div class="head"><div><h2>配送・設置内容</h2><div class="muted">案件ごとに商品台数と配設件数を入力</div></div><button id="addJob" class="mini">＋案件追加</button></div><div id="jobList" class="job-list"></div></div></section>
+    <main>
+      <section id="page-home" class="page active">
+        <div class="dashboard-grid">
+          <article class="card hero-card">
+            <div class="hero-meta">
+              <p id="todayDate" class="date-label"></p>
+              <span id="activeWorkplaceLabel" class="workplace-badge"></span>
+            </div>
+            <div id="clock" class="clock">00:00:00</div>
+            <div class="status-pill"><span id="statusDot" class="status-dot"></span><span id="statusText">未出勤</span></div>
+            <div class="punch-buttons">
+              <button id="clockInButton" class="button primary">出勤する</button>
+              <button id="clockOutButton" class="button danger" disabled>退勤する</button>
+              <button id="breakButton" class="button secondary full" disabled>休憩を開始</button>
+            </div>
+            <div class="work-meter">
+              <span>本日の実働</span>
+              <strong id="todayWork">0時間00分</strong>
+            </div>
+          </article>
 
-<section id="reportPage" class="page"><div class="card pad"><div class="head"><div><h2>業務日報</h2><div id="reportDate" class="muted"></div></div><button id="generate" class="mini">再作成</button></div><textarea id="output" class="output"></textarea><div class="toolbar"><button id="copy" class="mini">コピー</button><button id="share" class="mini">共有</button><button id="saveReport" class="mini">保存</button><button id="printPdf" class="mini">PDF</button><button id="sendSheet" class="mini">スプレッドシート送信</button></div></div></section>
+          <article class="card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">TODAY</p>
+                <h2>本日の状況</h2>
+              </div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat"><span>出社</span><strong id="todayClockIn">未記録</strong></div>
+              <div class="stat"><span>退社</span><strong id="todayClockOut">未記録</strong></div>
+              <div class="stat"><span>配設件数</span><strong id="todayJobCount">0件</strong></div>
+              <div class="stat"><span>残業見込</span><strong id="todayOvertime">0分</strong></div>
+            </div>
+            <div class="quick-grid">
+              <button class="button ghost" data-go="jobs">業務を入力</button>
+              <button id="gpsButton" class="button ghost">GPSを記録</button>
+              <button class="button ghost" data-go="report">日報を確認</button>
+              <button id="quickShareButton" class="button ghost">日報を共有</button>
+            </div>
+            <p id="gpsStatus" class="small-note">GPS：未取得</p>
+          </article>
+        </div>
 
-<section id="historyPage" class="page"><div class="card pad"><div class="head"><div><h2>勤怠・日報履歴</h2><div class="muted">出退勤・休憩・日報を後から修正できます</div></div><div class="toolbar" style="margin:0"><button id="csvBtn" class="mini">CSV</button><button id="backupBtn" class="mini">バックアップ</button><button id="restoreBtn" class="mini">復元</button><input id="restoreFile" type="file" accept=".json" hidden></div></div>
-<div class="fields section"><div class="field"><label>開始日</label><input id="filterFrom" type="date"></div><div class="field"><label>終了日</label><input id="filterTo" type="date"></div><div class="field"><label>配送先・案件名検索</label><input id="filterText"></div></div>
-<div class="table-wrap section"><table><thead><tr><th>日付</th><th>出社</th><th>退社</th><th>実働</th><th>残業</th><th>件数</th><th>給与</th><th>操作</th></tr></thead><tbody id="historyBody"></tbody></table></div></div></section>
+        <article class="card section-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">NEXT SHIFT</p><h2>次のシフト</h2></div>
+          </div>
+          <div id="nextShift" class="empty-state">登録されたシフトはありません</div>
+        </article>
+      </section>
 
-<section id="shiftPage" class="page"><div class="card pad"><div class="head"><div><h2>シフト管理</h2><div class="muted">予定勤務を登録できます</div></div><button id="addShiftBtn" class="mini">＋シフト追加</button></div><div class="table-wrap"><table><thead><tr><th>日付</th><th>開始</th><th>終了</th><th>場所</th><th>メモ</th><th></th></tr></thead><tbody id="shiftBody"></tbody></table></div></div></section>
+      <section id="page-jobs" class="page">
+        <article class="card section-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">DELIVERY JOBS</p><h2>配送・設置内容</h2></div>
+            <button id="addJobButton" class="button compact primary">＋ 案件追加</button>
+          </div>
+          <div class="quick-products">
+            <button data-quick-product="tv">テレビ＋1</button>
+            <button data-quick-product="fridge">冷蔵庫＋1</button>
+            <button data-quick-product="washer">洗濯機＋1</button>
+            <button data-quick-product="aircon">エアコン＋1</button>
+            <button data-quick-product="microwave">電子レンジ＋1</button>
+            <button data-quick-product="install">配設＋1</button>
+          </div>
+          <div id="routeHistory" class="route-history"></div>
+          <div id="jobList" class="job-list"></div>
+        </article>
+      </section>
 
-<section id="monthPage" class="page"><div class="card pad"><div class="head"><h2>月間ダッシュボード</h2><input id="monthPicker" type="month" class="mini"></div><div class="stats"><div class="stat"><span>勤務日数</span><strong id="monthDays">0日</strong></div><div class="stat"><span>総実働</span><strong id="monthHours">0時間00分</strong></div><div class="stat"><span>残業</span><strong id="monthOver">0時間00分</strong></div><div class="stat"><span>深夜時間</span><strong id="monthNight">0時間00分</strong></div><div class="stat"><span>配送設置件数</span><strong id="monthJobs">0件</strong></div><div class="stat"><span>概算給与</span><strong id="monthPay">¥0</strong></div></div><div class="canvas-wrap section"><canvas id="hoursChart" width="900" height="300"></canvas></div></div></section>
+      <section id="page-report" class="page">
+        <article class="card section-card report-paper">
+          <div class="card-heading">
+            <div><p class="eyebrow">DAILY REPORT</p><h2>業務日報</h2><p id="reportDate" class="small-note"></p></div>
+            <button id="generateReportButton" class="button compact ghost">再作成</button>
+          </div>
+          <textarea id="reportOutput" class="report-output"></textarea>
+          <div class="action-row">
+            <button id="copyReportButton" class="button ghost">コピー</button>
+            <button id="shareReportButton" class="button ghost">LINE・共有</button>
+            <button id="saveReportButton" class="button primary">保存</button>
+            <button id="printReportButton" class="button ghost">PDF保存</button>
+            <button id="calendarButton" class="button ghost">カレンダー登録</button>
+            <button id="sheetButton" class="button ghost">シート送信</button>
+          </div>
+        </article>
+      </section>
 
-<section id="settingsPage" class="page"><div class="card pad"><h2>設定</h2><div class="settings-grid">
-<div class="setting"><label>表示名</label><input id="nameSet"></div><div class="setting"><label>基本時給</label><input id="wageSet" type="number"></div><div class="setting"><label>所定労働時間（時間/日）</label><input id="standardHours" type="number" step="0.25"></div><div class="setting"><label>残業割増率</label><input id="overtimeRate" type="number" step="0.01"></div><div class="setting"><label>深夜割増率</label><input id="nightRate" type="number" step="0.01"></div><div class="setting"><label>休日割増率</label><input id="holidayRate" type="number" step="0.01"></div><div class="setting"><label>テーマ</label><select id="themeSet"><option value="dark">ダーク</option><option value="light">ライト</option></select></div><div class="setting"><label>パスコードロック</label><input id="pinSet" type="password" inputmode="numeric" maxlength="8" placeholder="未設定なら空欄"></div><div class="setting" style="grid-column:1/-1"><label>Google Apps Script WebアプリURL</label><input id="sheetUrl"></div></div>
-<div class="toolbar"><button id="saveSettings" class="btn primary">設定保存</button><button id="lockNow" class="btn secondary">今すぐロック</button><button id="clearAll" class="btn danger">全データ削除</button></div>
-<div class="notice section">WebアプリのためFace IDを直接制御できないので、代わりにパスコードロックを実装しています。残業・深夜・休日手当は設定値を使った概算です。</div></div></section>
-</div>
+      <section id="page-history" class="page">
+        <article class="card section-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">HISTORY & EDIT</p><h2>勤怠履歴・修正</h2></div>
+            <div class="inline-actions">
+              <button id="csvButton" class="button compact ghost">CSV</button>
+              <button id="backupButton" class="button compact ghost">バックアップ</button>
+              <label class="button compact ghost file-label">復元<input id="restoreInput" type="file" accept=".json"></label>
+            </div>
+          </div>
+          <div class="filter-grid">
+            <label>勤務先<select id="filterWorkplace"></select></label>
+            <label>開始日<input id="filterFrom" type="date"></label>
+            <label>終了日<input id="filterTo" type="date"></label>
+            <label>案件名・配送先<input id="filterQuery" type="search" placeholder="検索"></label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>勤務先</th><th>日付</th><th>出社</th><th>退社</th><th>実働</th><th>残業</th><th>件数</th><th>概算給与</th><th>操作</th></tr></thead>
+              <tbody id="historyTable"></tbody>
+            </table>
+          </div>
+          <details class="deleted-details">
+            <summary>削除履歴を表示</summary>
+            <div id="deletedHistory" class="deleted-history"></div>
+          </details>
+        </article>
+      </section>
 
-<div class="bottom"><button data-page-go="homePage">打刻</button><button data-page-go="jobsPage">業務</button><button data-page-go="historyPage">履歴</button><button data-page-go="monthPage">月報</button></div>
-<div id="toast" class="toast"></div>
+      <section id="page-shifts" class="page">
+        <article class="card section-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">SHIFT</p><h2>シフト管理</h2></div>
+            <button id="addShiftButton" class="button compact primary">＋ シフト追加</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>勤務先</th><th>日付</th><th>開始</th><th>終了</th><th>場所</th><th>メモ</th><th></th></tr></thead>
+              <tbody id="shiftTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
 
-<div id="editModal" class="modal"><div class="modal-card"><div class="head"><h2>勤怠を修正</h2><button id="closeEdit" class="mini">閉じる</button></div><input id="editId" type="hidden"><div class="fields"><div class="field"><label>日付</label><input id="editDate" type="date"></div><div class="field"><label>出社</label><input id="editIn" type="time"></div><div class="field"><label>退社</label><input id="editOut" type="time"></div><div class="field"><label>休憩（分）</label><input id="editBreak" type="number" min="0"></div><div class="field" style="grid-column:1/-1"><label>修正理由</label><textarea id="editReason" placeholder="例：打刻忘れのため"></textarea></div></div><div class="toolbar"><button id="saveEdit" class="btn primary">修正を保存</button></div></div></div>
+      <section id="page-analytics" class="page">
+        <article class="card section-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">MONTHLY ANALYTICS</p><h2>月間ダッシュボード</h2></div>
+            <div class="month-controls">
+              <select id="monthWorkplace" class="month-picker"></select>
+              <input id="monthPicker" type="month" class="month-picker">
+            </div>
+          </div>
+          <div class="analytics-grid">
+            <div class="stat"><span>勤務日数</span><strong id="monthDays">0日</strong></div>
+            <div class="stat"><span>総実働</span><strong id="monthHours">0時間00分</strong></div>
+            <div class="stat"><span>残業</span><strong id="monthOvertime">0時間00分</strong></div>
+            <div class="stat"><span>深夜時間</span><strong id="monthNight">0時間00分</strong></div>
+            <div class="stat"><span>配設件数</span><strong id="monthJobs">0件</strong></div>
+            <div class="stat"><span>概算給与</span><strong id="monthPay">¥0</strong></div>
+          </div>
+          <div class="chart-card"><canvas id="hoursChart" width="960" height="320"></canvas></div>
+          <div class="chart-card"><canvas id="jobsChart" width="960" height="320"></canvas></div>
+        </article>
+      </section>
 
-<div id="auditModal" class="modal"><div class="modal-card"><div class="head"><h2>修正履歴</h2><button id="closeAudit" class="mini">閉じる</button></div><div id="auditList"></div></div></div>
+      <section id="page-settings" class="page">
+        <article class="card section-card">
+          <div class="card-heading"><div><p class="eyebrow">SETTINGS</p><h2>アプリ設定</h2></div></div>
+          <section class="workplace-settings">
+            <div class="card-heading">
+              <div><p class="eyebrow">WORKPLACES</p><h2>勤務先管理</h2></div>
+              <button id="addWorkplaceButton" class="button compact primary">＋勤務先追加</button>
+            </div>
+            <div id="workplaceSettingsList" class="workplace-settings-list"></div>
+          </section>
+          <div class="settings-grid section-gap">
+            <label>表示名<input id="settingName"></label>
+            <label>テーマ<select id="settingTheme"><option value="dark">ダーク</option><option value="light">ライト</option></select></label>
+            <label>パスコード<input id="settingPin" type="password" inputmode="numeric" maxlength="8" placeholder="空欄で解除"></label>
+            <label class="wide">Google Apps Script URL<input id="settingSheetUrl" type="url" placeholder="https://script.google.com/..."></label>
+            <label>退勤時の自動送信<select id="settingAutoSend"><option value="off">しない</option><option value="on">送信する</option></select></label>
+          </div>
+          <div class="action-row">
+            <button id="saveSettingsButton" class="button primary">設定を保存</button>
+            <button id="lockNowButton" class="button ghost">今すぐロック</button>
+            <button id="clearDataButton" class="button danger">全データ削除</button>
+          </div>
+          <p class="notice">Face IDをWebアプリから直接制御することはできないため、パスコードロックを採用しています。給与は設定値に基づく概算です。</p>
+        </article>
+      </section>
+    </main>
+  </div>
 
-<div id="shiftModal" class="modal"><div class="modal-card"><div class="head"><h2>シフト登録</h2><button id="closeShift" class="mini">閉じる</button></div><div class="fields"><div class="field"><label>日付</label><input id="shiftDate" type="date"></div><div class="field"><label>開始</label><input id="shiftStart" type="time"></div><div class="field"><label>終了</label><input id="shiftEnd" type="time"></div><div class="field"><label>場所</label><input id="shiftPlace"></div><div class="field" style="grid-column:1/-1"><label>メモ</label><textarea id="shiftNote"></textarea></div></div><div class="toolbar"><button id="saveShift" class="btn primary">登録</button></div></div></div>
+  <nav class="bottom-nav">
+    <button data-go="home">打刻</button>
+    <button data-go="jobs">業務</button>
+    <button data-go="report">日報</button>
+    <button data-go="history">履歴</button>
+    <button data-go="analytics">月報</button>
+  </nav>
 
-<script>
-const KEY="mytime_pro_v2_state",SETKEY="mytime_pro_v2_settings";
-let state=JSON.parse(localStorage.getItem(KEY)||'{"active":null,"records":[],"todayJobs":[],"gps":null,"shifts":[]}');
-let settings=JSON.parse(localStorage.getItem(SETKEY)||'{"name":"","wage":1200,"standardHours":8,"overtimeRate":1.25,"nightRate":1.25,"holidayRate":1.35,"theme":"dark","pin":"","sheetUrl":""}');
-const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,"0"),nowMs=()=>Date.now(),now=()=>new Date();
-const dkey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`, timeShort=ms=>{if(!ms)return"未記録";const d=new Date(ms);return`${pad(d.getHours())}:${pad(d.getMinutes())}`}, dur=m=>`${Math.floor(m/60)}時間${pad(Math.floor(m%60))}分`,yen=n=>new Intl.NumberFormat("ja-JP",{style:"currency",currency:"JPY",maximumFractionDigits:0}).format(n);
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1700)}
-function breakMinutes(r,end=nowMs()){if(r.manualBreakMinutes!=null)return Number(r.manualBreakMinutes);return Math.floor((r?.breaks||[]).reduce((s,b)=>s+Math.max(0,(b.end||end)-b.start),0)/60000)}
-function workMinutes(r,end=nowMs()){if(!r)return 0;return Math.max(0,Math.floor(((r.clockOut||end)-r.clockIn)/60000)-breakMinutes(r,end))}
-function overtimeMinutes(r){return Math.max(0,workMinutes(r,r.clockOut)-Number(settings.standardHours||8)*60)}
-function nightMinutes(r){if(!r?.clockOut)return 0;let m=0;for(let t=r.clockIn;t<r.clockOut;t+=60000){const h=new Date(t).getHours();if(h>=22||h<5)m++}return m}
-function isHoliday(r){const d=new Date(r.clockIn).getDay();return d===0||d===6}
-function payFor(r){const w=Number(settings.wage||0),total=workMinutes(r,r.clockOut),over=overtimeMinutes(r),night=nightMinutes(r),holiday=isHoliday(r)?total:0,base=Math.max(0,total-over);return Math.round(base/60*w+over/60*w*Number(settings.overtimeRate||1.25)+night/60*w*(Number(settings.nightRate||1.25)-1)+holiday/60*w*(Number(settings.holidayRate||1.35)-1))}
-function todayRecord(){return state.active&&dkey(new Date(state.active.clockIn))===dkey(now())?state.active:[...state.records].reverse().find(r=>dkey(new Date(r.clockIn))===dkey(now()))}
-function totalJobs(jobs=state.todayJobs){return jobs.reduce((s,j)=>s+Number(j.install||0),0)}
-function updateClock(){const n=now();$("clock").textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;$("today").textContent=new Intl.DateTimeFormat("ja-JP",{year:"numeric",month:"long",day:"numeric",weekday:"long"}).format(n);$("reportDate").textContent=new Intl.DateTimeFormat("ja-JP",{month:"long",day:"numeric",weekday:"long"}).format(n);const r=todayRecord();$("workToday").textContent=dur(workMinutes(r));$("overtimeToday").textContent=`${overtimeMinutes(r)}分`}
-function renderStatus(){const ob=state.active?.breaks?.some(b=>!b.end);$("inBtn").disabled=!!state.active;$("outBtn").disabled=!state.active||ob;$("breakBtn").disabled=!state.active;$("dot").className="dot";if(!state.active){$("status").textContent="未出勤";$("breakBtn").textContent="休憩を開始"}else if(ob){$("status").textContent="休憩中";$("dot").classList.add("break");$("breakBtn").textContent="休憩を終了"}else{$("status").textContent="勤務中";$("dot").classList.add("work");$("breakBtn").textContent="休憩を開始"}}
-function renderSummary(){const r=todayRecord();$("startText").textContent=r?timeShort(r.clockIn):"未記録";$("endText").textContent=r?.clockOut?timeShort(r.clockOut):"未記録";$("jobCount").textContent=`${totalJobs()}件`}
-function addJob(v={}){state.todayJobs.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),customer:v.customer||"",address:v.address||"",tv:v.tv||0,fridge:v.fridge||0,washer:v.washer||0,aircon:v.aircon||0,microwave:v.microwave||0,otherName:v.otherName||"",otherCount:v.otherCount||0,install:v.install??1,note:v.note||""});save();renderJobs()}
-function counter(i,k,v,l){return `<div class="field"><label>${l}</label><div class="counter"><button data-c="${i}" data-k="${k}" data-d="-1">−</button><input type="number" min="0" data-i="${i}" data-k="${k}" value="${v}"><button data-c="${i}" data-k="${k}" data-d="1">＋</button></div></div>`}
-function renderJobs(){const list=$("jobList");list.innerHTML="";state.todayJobs.forEach((j,i)=>{const d=document.createElement("div");d.className="job";d.innerHTML=`<div class="job-head"><strong>案件 ${i+1}</strong><button class="remove" data-remove="${i}">削除</button></div><div class="fields"><div class="field"><label>案件名</label><input data-i="${i}" data-k="customer" value="${j.customer}"></div><div class="field"><label>配送先</label><input data-i="${i}" data-k="address" value="${j.address}"></div>${counter(i,"tv",j.tv,"テレビ")}${counter(i,"fridge",j.fridge,"冷蔵庫")}${counter(i,"washer",j.washer,"洗濯機")}${counter(i,"aircon",j.aircon,"エアコン")}${counter(i,"microwave",j.microwave,"電子レンジ")}<div class="field"><label>その他品名</label><input data-i="${i}" data-k="otherName" value="${j.otherName}"></div>${counter(i,"otherCount",j.otherCount,"その他台数")}${counter(i,"install",j.install,"配設件数")}<div class="field" style="grid-column:1/-1"><label>メモ</label><textarea data-i="${i}" data-k="note">${j.note}</textarea></div></div>`;list.appendChild(d)});
-list.querySelectorAll("input,textarea").forEach(x=>x.oninput=()=>{const i=+x.dataset.i,k=x.dataset.k;if(!k)return;state.todayJobs[i][k]=["customer","address","otherName","note"].includes(k)?x.value:Number(x.value||0);save();renderSummary()});list.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const i=+b.dataset.c,k=b.dataset.k;state.todayJobs[i][k]=Math.max(0,Number(state.todayJobs[i][k]||0)+Number(b.dataset.d));save();renderJobs()});list.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{state.todayJobs.splice(+b.dataset.remove,1);save();renderJobs()})}
-function makeReport(){const n=now(),r=todayRecord(),wd=["日","月","火","水","木","金","土"][n.getDay()];let a=[`${n.getMonth()+1}月${n.getDate()}日（${wd}曜日）`,`出社${r?timeShort(r.clockIn):"未記録"}`,`退社${r?.clockOut?timeShort(r.clockOut):"未記録"}`,"業務内容"];const nums=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩"];state.todayJobs.forEach((j,i)=>{let p=[];if(j.tv)p.push(`テレビ${j.tv}`);if(j.fridge)p.push(`冷蔵庫${j.fridge}`);if(j.washer)p.push(`洗濯機${j.washer}`);if(j.aircon)p.push(`エアコン${j.aircon}`);if(j.microwave)p.push(`電子レンジ${j.microwave}`);if(j.otherName&&j.otherCount)p.push(`${j.otherName}${j.otherCount}`);p.push(`配設${j.install||0}件`);a.push(`${nums[i]||`${i+1}.`}${p.join("")}`)});a.push(`合計${totalJobs()}件`);$("output").value=a.join("\n");return $("output").value}
-function filteredRecords(){const f=$("filterFrom").value,t=$("filterTo").value,q=$("filterText").value.trim().toLowerCase();return state.records.filter(r=>{const d=dkey(new Date(r.clockIn));if(f&&d<f)return false;if(t&&d>t)return false;if(q){const text=JSON.stringify(r.jobs||[]).toLowerCase();if(!text.includes(q))return false}return true})}
-function renderHistory(){const b=$("historyBody");b.innerHTML="";const rows=filteredRecords().sort((a,b)=>b.clockIn-a.clockIn);if(!rows.length){b.innerHTML='<tr><td colspan="8" class="empty">履歴がありません</td></tr>';return}rows.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${dkey(new Date(r.clockIn))}</td><td>${timeShort(r.clockIn)}</td><td>${timeShort(r.clockOut)}</td><td>${dur(workMinutes(r,r.clockOut))}</td><td>${dur(overtimeMinutes(r))}</td><td>${totalJobs(r.jobs||[])}件</td><td>${yen(payFor(r))}</td><td><button class="mini" data-edit="${r.id}">修正</button> <button class="mini" data-audit="${r.id}">履歴</button></td>`;b.appendChild(tr)});b.querySelectorAll("[data-edit]").forEach(x=>x.onclick=()=>openEdit(x.dataset.edit));b.querySelectorAll("[data-audit]").forEach(x=>x.onclick=()=>openAudit(x.dataset.audit))}
-function openEdit(id){const r=state.records.find(x=>x.id===id);$("editId").value=id;$("editDate").value=dkey(new Date(r.clockIn));$("editIn").value=timeShort(r.clockIn);$("editOut").value=timeShort(r.clockOut);$("editBreak").value=breakMinutes(r,r.clockOut);$("editReason").value="";$("editModal").classList.add("show")}
-function openAudit(id){const r=state.records.find(x=>x.id===id),a=r.audit||[];$("auditList").innerHTML=a.length?a.map(x=>`<div class="audit"><strong>${new Date(x.at).toLocaleString("ja-JP")}</strong><div>${x.reason}</div><div class="muted">出社 ${x.before.in} → ${x.after.in} / 退社 ${x.before.out} → ${x.after.out} / 休憩 ${x.before.break}分 → ${x.after.break}分</div></div>`).join(""):'<div class="empty">修正履歴はありません</div>';$("auditModal").classList.add("show")}
-function saveEdit(){const r=state.records.find(x=>x.id===$("editId").value),reason=$("editReason").value.trim();if(!reason)return toast("修正理由を入力してください");const before={in:timeShort(r.clockIn),out:timeShort(r.clockOut),break:breakMinutes(r,r.clockOut)},date=$("editDate").value,make=(tm)=>new Date(`${date}T${tm}:00`).getTime();r.clockIn=make($("editIn").value);r.clockOut=make($("editOut").value);r.manualBreakMinutes=Number($("editBreak").value||0);r.audit=r.audit||[];r.audit.push({at:Date.now(),reason,before,after:{in:$("editIn").value,out:$("editOut").value,break:r.manualBreakMinutes}});r.report=makeReportForRecord(r);save();$("editModal").classList.remove("show");renderAll();toast("勤怠を修正しました")}
-function makeReportForRecord(r){const d=new Date(r.clockIn),wd=["日","月","火","水","木","金","土"][d.getDay()];return `${d.getMonth()+1}月${d.getDate()}日（${wd}曜日）\n出社${timeShort(r.clockIn)}\n退社${timeShort(r.clockOut)}\n業務内容\n${(r.jobs||[]).map((j,i)=>`${i+1}. 配設${j.install||0}件`).join("\n")}\n合計${totalJobs(r.jobs||[])}件`}
-function renderShifts(){const b=$("shiftBody");b.innerHTML="";if(!state.shifts.length){b.innerHTML='<tr><td colspan="6" class="empty">シフト未登録</td></tr>';return}state.shifts.sort((a,b)=>a.date.localeCompare(b.date)).forEach((s,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${s.date}</td><td>${s.start}</td><td>${s.end}</td><td>${s.place}</td><td>${s.note}</td><td><button class="mini" data-sdel="${i}">削除</button></td>`;b.appendChild(tr)});b.querySelectorAll("[data-sdel]").forEach(x=>x.onclick=()=>{state.shifts.splice(+x.dataset.sdel,1);save();renderShifts()})}
-function monthRows(){const ym=$("monthPicker").value;return state.records.filter(r=>dkey(new Date(r.clockIn)).startsWith(ym))}
-function renderMonth(){if(!$("monthPicker").value)$("monthPicker").value=dkey(now()).slice(0,7);const rows=monthRows(),mins=rows.reduce((s,r)=>s+workMinutes(r,r.clockOut),0),over=rows.reduce((s,r)=>s+overtimeMinutes(r),0),night=rows.reduce((s,r)=>s+nightMinutes(r),0),jobs=rows.reduce((s,r)=>s+totalJobs(r.jobs||[]),0),pay=rows.reduce((s,r)=>s+payFor(r),0);$("monthDays").textContent=`${rows.length}日`;$("monthHours").textContent=dur(mins);$("monthOver").textContent=dur(over);$("monthNight").textContent=dur(night);$("monthJobs").textContent=`${jobs}件`;$("monthPay").textContent=yen(pay);drawChart(rows)}
-function drawChart(rows){const c=$("hoursChart"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--text");ctx.font="22px sans-serif";ctx.fillText("日別実働時間",24,32);if(!rows.length)return;const vals=rows.map(r=>workMinutes(r,r.clockOut)/60),max=Math.max(8,...vals),bw=(w-70)/rows.length;rows.forEach((r,i)=>{const bh=vals[i]/max*(h-90),x=50+i*bw,y=h-35-bh;ctx.fillStyle="#6d7cff";ctx.fillRect(x,y,Math.max(8,bw-8),bh);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--text");ctx.font="16px sans-serif";ctx.fillText(new Date(r.clockIn).getDate(),x,h-12)})}
-function showPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.page===id));if(id==="reportPage")makeReport();if(id==="monthPage")renderMonth()}
-document.querySelectorAll("[data-page],[data-page-go]").forEach(b=>b.onclick=()=>showPage(b.dataset.page||b.dataset.pageGo));
-$("inBtn").onclick=()=>{state.active={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),clockIn:Date.now(),clockOut:null,breaks:[],jobs:[]};save();renderAll();toast("出勤を記録しました")};$("outBtn").onclick=()=>{state.active.clockOut=Date.now();state.active.jobs=JSON.parse(JSON.stringify(state.todayJobs));state.active.report=makeReport();state.records.push(state.active);state.active=null;save();renderAll();toast("退勤を記録しました")};$("breakBtn").onclick=()=>{const o=state.active.breaks.find(b=>!b.end);if(o)o.end=Date.now();else state.active.breaks.push({start:Date.now(),end:null});save();renderAll()}
-$("addJob").onclick=()=>addJob();$("generate").onclick=makeReport;$("saveReport").onclick=()=>{const r=todayRecord();if(r){r.jobs=JSON.parse(JSON.stringify(state.todayJobs));r.report=$("output").value;save();toast("日報保存")}};$("copy").onclick=async()=>{await navigator.clipboard.writeText($("output").value||makeReport());toast("コピーしました")};$("share").onclick=async()=>{const text=$("output").value||makeReport();if(navigator.share)await navigator.share({title:"業務日報",text})};$("shareQuick").onclick=$("share").onclick;$("printPdf").onclick=()=>window.print();$("gpsBtn").onclick=()=>navigator.geolocation?.getCurrentPosition(p=>{state.gps={lat:p.coords.latitude,lng:p.coords.longitude};save();toast("GPS取得")})
-$("filterFrom").oninput=$("filterTo").oninput=$("filterText").oninput=renderHistory;$("closeEdit").onclick=()=>$("editModal").classList.remove("show");$("closeAudit").onclick=()=>$("auditModal").classList.remove("show");$("saveEdit").onclick=saveEdit;
-$("addShiftBtn").onclick=()=>$("shiftModal").classList.add("show");$("closeShift").onclick=()=>$("shiftModal").classList.remove("show");$("saveShift").onclick=()=>{state.shifts.push({date:$("shiftDate").value,start:$("shiftStart").value,end:$("shiftEnd").value,place:$("shiftPlace").value,note:$("shiftNote").value});save();$("shiftModal").classList.remove("show");renderShifts();toast("シフト登録")}
-$("csvBtn").onclick=()=>{const rows=[["日付","出社","退社","休憩分","実働分","残業分","深夜分","件数","給与"],...state.records.map(r=>[dkey(new Date(r.clockIn)),timeShort(r.clockIn),timeShort(r.clockOut),breakMinutes(r,r.clockOut),workMinutes(r,r.clockOut),overtimeMinutes(r),nightMinutes(r),totalJobs(r.jobs||[]),payFor(r)])],csv="\uFEFF"+rows.map(r=>r.map(v=>`"${v}"`).join(",")).join("\n"),a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="勤務履歴.csv";a.click()}
-$("backupBtn").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({state,settings},null,2)],{type:"application/json"}));a.download="MyTime_backup.json";a.click()};$("restoreBtn").onclick=()=>$("restoreFile").click();$("restoreFile").onchange=()=>{const f=$("restoreFile").files[0],rd=new FileReader();rd.onload=()=>{const x=JSON.parse(rd.result);state=x.state;settings=x.settings;save();localStorage.setItem(SETKEY,JSON.stringify(settings));location.reload()};rd.readAsText(f)}
-$("nameSet").value=settings.name;$("wageSet").value=settings.wage;$("standardHours").value=settings.standardHours;$("overtimeRate").value=settings.overtimeRate;$("nightRate").value=settings.nightRate;$("holidayRate").value=settings.holidayRate;$("themeSet").value=settings.theme;$("pinSet").value=settings.pin;$("sheetUrl").value=settings.sheetUrl;
-$("saveSettings").onclick=()=>{settings={name:$("nameSet").value,wage:Number($("wageSet").value),standardHours:Number($("standardHours").value),overtimeRate:Number($("overtimeRate").value),nightRate:Number($("nightRate").value),holidayRate:Number($("holidayRate").value),theme:$("themeSet").value,pin:$("pinSet").value,sheetUrl:$("sheetUrl").value};localStorage.setItem(SETKEY,JSON.stringify(settings));document.documentElement.dataset.theme=settings.theme;renderMonth();toast("設定保存")};$("themeBtn").onclick=()=>{settings.theme=settings.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=settings.theme;localStorage.setItem(SETKEY,JSON.stringify(settings))};$("lockNow").onclick=()=>{if(settings.pin)$("lockScreen").classList.add("show");else toast("パスコード未設定")};$("unlockBtn").onclick=()=>{if($("unlockPin").value===settings.pin){$("lockScreen").classList.remove("show");$("unlockPin").value=""}else toast("パスコードが違います")};$("clearAll").onclick=()=>{if(confirm("全データ削除しますか？")){localStorage.removeItem(KEY);location.reload()}};$("monthPicker").oninput=renderMonth;
-function renderAll(){renderStatus();renderSummary();renderJobs();renderHistory();renderShifts();renderMonth();updateClock()}
-document.documentElement.dataset.theme=settings.theme||"dark";if(settings.pin)$("lockScreen").classList.add("show");if(!state.todayJobs.length)addJob();renderAll();setInterval(updateClock,1000);if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-</script>
+  <div id="editModal" class="modal hidden">
+    <section class="modal-card">
+      <div class="card-heading"><h2>勤怠を修正</h2><button class="icon-button" data-close="editModal">×</button></div>
+      <input id="editRecordId" type="hidden">
+      <div class="settings-grid">
+        <label>日付<input id="editDate" type="date"></label>
+        <label>出社<input id="editClockIn" type="time"></label>
+        <label>退社<input id="editClockOut" type="time"></label>
+        <label>休憩時間（分）<input id="editBreakMinutes" type="number" min="0"></label>
+        <label class="wide">修正理由<textarea id="editReason" placeholder="例：打刻忘れのため"></textarea></label>
+      </div>
+      <button id="saveEditButton" class="button primary">修正を保存</button>
+    </section>
+  </div>
+
+  <div id="auditModal" class="modal hidden">
+    <section class="modal-card">
+      <div class="card-heading"><h2>修正履歴</h2><button class="icon-button" data-close="auditModal">×</button></div>
+      <div id="auditList"></div>
+    </section>
+  </div>
+
+  <div id="shiftModal" class="modal hidden">
+    <section class="modal-card">
+      <div class="card-heading"><h2>シフトを登録</h2><button class="icon-button" data-close="shiftModal">×</button></div>
+      <div class="settings-grid">
+        <label>勤務先<select id="shiftWorkplace"></select></label>
+        <label>日付<input id="shiftDate" type="date"></label>
+        <label>開始<input id="shiftStart" type="time"></label>
+        <label>終了<input id="shiftEnd" type="time"></label>
+        <label>場所<input id="shiftPlace"></label>
+        <label class="wide">メモ<textarea id="shiftNote"></textarea></label>
+      </div>
+      <button id="saveShiftButton" class="button primary">登録する</button>
+    </section>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="./app.js"></script>
 </body>
 </html>
