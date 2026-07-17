@@ -1,6 +1,6 @@
 {
-  "name": "My Time COMPLETE",
-  "short_name": "My Time",
+  "name": "My Time PRO v2",
+  "short_name": "My Time PRO",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#07101f",
